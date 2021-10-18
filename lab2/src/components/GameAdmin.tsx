@@ -1,36 +1,43 @@
-import React, {Component} from 'react';
+ import React, {Component} from 'react';
 import Player from './Player';
 
-// function copyText()
-// {
-// 	document.getElementById("field2").value=document.getElementById("field1").value;
-// }
+class GameAdmin  extends Component<any,any>{   
 
+  constructor(props:any) {
+    super(props);
+    this.state = {username1:"",
+        username2:"",
+        playingId:0};
+    this.parenthandleClick = this.parenthandleClick.bind(this);
+  }
 
-// 字段1: <input type="text" id="field1" value="Hello World!"><br/>
-// 字段2: <input type="text" id="field2">
+  onTodoChange(value:any,name:any){
+    //console.log(name)
+    this.setState({
+      [name]:value
+    });
+    //console.log(this.state)
+  }
 
-// <button onClick="copyText()">Play</button>
-
-class GameAdmin  extends Component{   
-
+  parenthandleClick(value:any) {
+    console.log(value)
+    this.setState({
+      playingId:value,
+    });
+  }
 
 render(){
-   return (
-
-       
+   return (       
     <div >
       <fieldset form="form1">
-        <Player name="zhangsan" label="Player One"> </Player> 
-        <Player name="ls" label="Player Two"> </Player> 
-      
-      
-        <span>Set Name of Player One: < input type="text"  name="username1"/></span><br/>
-        <span>Set Name of Player Two: <input type="text" name="username2"/></span>
-
-      </fieldset>
-      
-          </div>   
+        <Player playerId={1} name={this.state.username1} enabled={this.state.playingId!=1} onKidclick = {this.parenthandleClick} label="Player One"> </Player> 
+        <Player playerId={2} name={this.state.username2} enabled={this.state.playingId!=2} onKidclick = {this.parenthandleClick} label="Player Two"> </Player> 
+        <span>Set Name of Player One: < input  onChange={e=>this.onTodoChange(e.target.value,"username1")}
+         type="text"  name="username1" value={this.state.username1}/></span><br/>
+        <span>Set Name of Player Two: <input onChange={e=>this.onTodoChange(e.target.value,"username2")}
+         type="text" name="username2"value={this.state.username2}/></span>
+      </fieldset>      
+     </div>   
    
     );
   }
