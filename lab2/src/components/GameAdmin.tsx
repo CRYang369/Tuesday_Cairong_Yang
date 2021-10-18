@@ -1,4 +1,4 @@
- import React, {Component} from 'react';
+import React, {Component} from 'react';
 import Player from './Player';
 
 class GameAdmin  extends Component<any,any>{   
@@ -11,12 +11,10 @@ class GameAdmin  extends Component<any,any>{
     this.parenthandleClick = this.parenthandleClick.bind(this);
   }
 
-  onTodoChange(value:any,name:any){
-    //console.log(name)
+  onTodoChange(value:any,name:any){  
     this.setState({
       [name]:value
-    });
-    //console.log(this.state)
+    }); 
   }
 
   parenthandleClick(value:any) {
@@ -30,8 +28,8 @@ render(){
    return (       
     <div >
       <fieldset form="form1">
-        <Player playerId={1} name={this.state.username1} enabled={this.state.playingId!=1} onKidclick = {this.parenthandleClick} label="Player One"> </Player> 
-        <Player playerId={2} name={this.state.username2} enabled={this.state.playingId!=2} onKidclick = {this.parenthandleClick} label="Player Two"> </Player> 
+        <Player playerId={1} name={this.state.username1} enabled={this.state.playingId!==1} onKidclick = {this.parenthandleClick} label="Player One"> </Player> 
+        <Player playerId={2} name={this.state.username2} enabled={this.state.playingId!==2} onKidclick = {this.parenthandleClick} label="Player Two"> </Player> 
         <span>Set Name of Player One: < input  onChange={e=>this.onTodoChange(e.target.value,"username1")}
          type="text"  name="username1" value={this.state.username1}/></span><br/>
         <span>Set Name of Player Two: <input onChange={e=>this.onTodoChange(e.target.value,"username2")}
