@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { Car } from './data/Car';
 
 
@@ -7,19 +7,33 @@ import { Car } from './data/Car';
 
 
 interface Props {
-    carItem:Car
+    carItem:Car,
+    index:number,
+    onClickDelete:Function,
+    editPrice:Function
 }
 
 
 const  CarListItemComponent:React.FC<Props>=(props)=>
  {  
+    const [iseditable, setiseditable]=useState<boolean>(false);
+    const handleseteditprice = () => {
+     
+        if(textInput.current&&iseditable){
+            let price=textInput.current.value
+            props.editPrice(props.index,price)
+        }      
+        setiseditable(!iseditable)  
+            // setInputVal(textInput.current.value);
+    };
+    const textInput=React.createRef<HTMLInputElement>();
     return (
       
         <div className ="row border mb-4">
  
             <div className ="col-2" >
                 <img
-                    // src={props.product.imageUrl}
+                    src={props.carItem.image}
                     className="img-fluid m-1" alt="..."/>
              </div>
             <div className ="col-3 mt-3">
@@ -34,12 +48,16 @@ const  CarListItemComponent:React.FC<Props>=(props)=>
             </div>
             <div className="col-2 mt-4">
             <p className="card-text">Price per day</p>
-            <p className="card-text">{props.carItem.pricePerDay}PLN</p>
+            <p className="card-text">
+            {iseditable ?  <input ref={textInput} type="text" name="inputval" defaultValue={props.carItem.pricePerDay}/>    
+                         :props.carItem.pricePerDay}PLN
+           
+            </p>
   
-            <button type="button"className="btn btn-primary">
-                   Edit
+            <button onClick={handleseteditprice} type="button"className="btn btn-primary">
+                {iseditable ?  "Save" :"Edit"}
                 </button>
-                <button type="button"className="btn btn-primary " >
+                <button onClick= {()=>props.onClickDelete(props.index)} type="button"className="btn btn-primary " >
                    Delete
                 </button>
             </div>  
